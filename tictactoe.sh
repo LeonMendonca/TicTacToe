@@ -29,11 +29,26 @@ printBoard() {
     fi
   done
   echo
-
 }
 
 PrintTitle() {
- echo "TIC TAC TOE"
+  declare -A Egarray
+  Egarrayvalue=0
+  echo "  TIC TAC TOE"
+  echo
+  for((i=0 ; i<3 ; i++)); do
+    for((j=0 ; j<3 ; j++)); do
+      Egarrayvalue=$(($Egarrayvalue+1))
+      echo -n "| ${Egarray[$i,$j]}$Egarrayvalue |"
+    done
+    echo
+    if [[ $i -ne 2 ]]; then
+      HLines
+    fi
+  done
+  echo
+  echo "EACH NUMBER IS THE POSITIONING TO INPUT TO THE GRID"
+  echo
 }
 
 #Begins here
@@ -132,17 +147,16 @@ Tie() {
 while :
 do
    PrintTitle
-   echo -e "\n$currPlayer's turn\n"
+
+   echo -e "\n   $currPlayer's turn\n"
    TakeInput
 
    #clears the terminal for less clutter
    echo "$(clear)"
 
-   #PrintTitle
-
    #Check if the selected row col is not empty
    if [ "${Marray[$row,$col]}" != " " ]; then
-     echo "INVALID MOVE!"
+     echo -e "INVALID MOVE!\n"
      continue
    fi
 
